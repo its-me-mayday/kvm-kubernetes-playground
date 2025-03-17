@@ -13,18 +13,6 @@ resource "libvirt_domain" "control-plane" {
     addresses  = ["10.0.0.2"]
   }
 
-  console {
-    type        = "pty"
-    target_port = "0"
-    target_type = "serial"
-  }
-
-  console {
-    type        = "pty"
-    target_port = "1"
-    target_type = "virtio"
-  }
-
   cloudinit = libvirt_cloudinit_disk.k8s_cloudinit.id
 
   depends_on = [libvirt_cloudinit_disk.k8s_cloudinit, libvirt_network.kube_network]

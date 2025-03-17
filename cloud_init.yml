@@ -18,6 +18,3 @@ runcmd:
   - systemctl enable containerd.service
   - swapoff -a
   - sed -i '/swap/ s/^/#/' /etc/fstab
-  - systemctl enable --now serial-getty@ttyS0.service
-  - "echo 'GRUB_CMDLINE_LINUX=\"console=tty0 console=ttyS0,115200n8\"' >> /etc/default/grub"
-  - update-grub
