@@ -10,6 +10,7 @@ packages:
   - apt-transport-https
   - ca-certificates
   - gnupg-agent
+  - curl
   - software-properties-common
   - containerd
 runcmd:
@@ -17,3 +18,9 @@ runcmd:
   - systemctl enable containerd.service
   - swapoff -a
   - sed -i '/swap/ s/^/#/' /etc/fstab
+  - curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  - echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' > /etc/apt/sources.list.d/kubernetes.list
+  - apt-get update
+  - apt-get install -y kubelet=1.28.15-1.1 kubeadm=1.28.15-1.1 kubectl=1.28.15-1.1
+  - apt-mark hold kubelet kubeadm kubectl
+
