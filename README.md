@@ -1,4 +1,4 @@
-# Repository Description: KVM Kubernetes Playground
+# KVM Kubernetes Playground
 
 > A Terraform/OpenTofu project to provision a local Kubernetes cluster on KVM virtualization, using libvirt for infrastructure management and cloud-init for node configuration.
 
