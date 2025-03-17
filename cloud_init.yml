@@ -1,5 +1,4 @@
 #cloud-config
-hostname: control-plane-1
 users:
   - name: lucamaggio
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
