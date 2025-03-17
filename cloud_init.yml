@@ -1,0 +1,23 @@
+#cloud-config
+hostname: control-plane-1
+users:
+  - name: lucamaggio
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCJ175LOzqNnLcBjNtfYppwNjna+S5EK86VtX+vXfkdTCD6z8BznAwKyy1K7OQX3cfHHtge6A2/Tg+fWqVXE14XChxhBoHYPe6t0tCPgjkm0q+NHgRfpFvMrmJ/gphBp91kzN/bTNCcaVmqEHvt82yeii/X15LgoFOfTSEEELrFjEIxdYzTyxHG0/xtos6WHlLNZe/+hXLj3Flad3sCxa7sKbqupBkyoQO3gVfdYnf3e0Ic5xBSO2UV1SmGbGpgd3uPk+NvIsYtJYyBxLQxqnRj7QHH3KHiLb1D3aQx1n/ieCbhU726o8/iveDZyOVvGFFNxhwI9YF4lQFP+AuP7U7HeUUqbhjNJurpSAaWRO7VDSY+19VJxAsQfd+vz/niYJlWGzHazI/LBdNebPQMAcIhOHMnV68FHtJJtkjm1jHcZy6VI28GSy2ZbEQpMQFMtjrmPBo8bkp2UR+1al+7cVL1Z22e/mZeueYnP3sGQfMNbPdc85tyzP9gsWkjdWRonSc= lucamaggio@lucamaggio-Vostro-3520
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - gnupg-agent
+  - software-properties-common
+  - containerd
+runcmd:
+  - apt-get update
+  - systemctl enable containerd.service
+  - swapoff -a
+  - sed -i '/swap/ s/^/#/' /etc/fstab
+  - systemctl enable --now serial-getty@ttyS0.service
+  - "echo 'GRUB_CMDLINE_LINUX=\"console=tty0 console=ttyS0,115200n8\"' >> /etc/default/grub"
+  - update-grub
