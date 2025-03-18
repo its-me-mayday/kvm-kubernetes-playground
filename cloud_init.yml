@@ -16,6 +16,7 @@ packages:
 runcmd:
   - apt-get update
   - systemctl enable containerd.service
+  - containerd config default | sed 's/SystemdCgroup = false/SystemdCgroup = true/' > /etc/containerd/config.toml
   - swapoff -a
   - sed -i '/swap/ s/^/#/' /etc/fstab
   - curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
